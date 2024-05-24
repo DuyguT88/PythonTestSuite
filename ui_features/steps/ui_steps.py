@@ -1,14 +1,7 @@
 from behave import given, when, then
-from selenium import webdriver
 from ui_features.pages.text_input_page import TextInputPage
 from ui_features.pages.dynamic_table_page import DynamicTablePage
 from ui_features.pages.ajax_page import AjaxPage
-
-
-@given('I open the browser')
-def step_open_browser(context):
-    context.driver = webdriver.Chrome()  # or use another WebDriver
-    context.driver.maximize_window()
 
 
 @when('I navigate to the Text Input page')
@@ -64,8 +57,3 @@ def step_click_ajax_button(context):
 def step_verify_ajax_content(context):
     content = context.page.wait_for_content()
     assert content  # Add more detailed checks as needed
-
-
-@then('I close the browser')
-def step_close_browser(context):
-    context.driver.quit()
