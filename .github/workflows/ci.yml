@@ -13,7 +13,7 @@ jobs:
           - 4444:4444
 
     env:
-      DISPLAY: :99.0
+      DISPLAY: :1.0  # Changed display number
       PYTHONPATH: ${{ github.workspace }}  # Ensure PYTHONPATH includes the project root
 
     steps:
@@ -34,8 +34,8 @@ jobs:
       - name: Run API Tests
         working-directory: api_features
         run: |
-          rm -f /tmp/.X99-lock  # Remove the lock file if it exists
-          Xvfb :99 -screen 0 1920x1080x16 &
+          rm -f /tmp/.X1-lock  # Remove the lock file if it exists
+          Xvfb :1 -screen 0 1920x1080x16 &
           python -m behave -f behave_html_formatter:HTMLFormatter -o reports/behave_report.html
         continue-on-error: true  # Optional: continue even if tests fail
 
@@ -43,8 +43,8 @@ jobs:
       - name: Run UI Tests
         working-directory: ui_features
         run: |
-          rm -f /tmp/.X99-lock  # Remove the lock file if it exists
-          Xvfb :99 -screen 0 1920x1080x16 &
+          rm -f /tmp/.X1-lock  # Remove the lock file if it exists
+          Xvfb :1 -screen 0 1920x1080x16 &
           python -m behave -f behave_html_formatter:HTMLFormatter -o reports/behave_report.html
         continue-on-error: true  # Optional: continue even if tests fail
 
