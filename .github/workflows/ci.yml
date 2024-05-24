@@ -14,6 +14,7 @@ jobs:
 
     env:
       DISPLAY: :99.0
+      PYTHONPATH: ${{ github.workspace }}  # Ensure PYTHONPATH includes the project root
 
     steps:
       - name: Checkout code
@@ -40,9 +41,8 @@ jobs:
       # Run UI Tests
       - name: Run UI Tests
         working-directory: ui_features
-        run: | # Remove the lock file if it exists
-          rm -f /tmp/.X99-lock
-          Xvfb :99 -screen 0 1920x1080x16 &
+        run: |
+          Xvfb :1 -screen 0 1920x1080x16 &
           python -m behave ui_features -f behave_html_formatter:HTMLFormatter -o ui_features/reports/behave_report.html
         continue-on-error: true  # Optional: continue even if tests fail
 
