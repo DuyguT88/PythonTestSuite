@@ -1,7 +1,7 @@
 from behave import given, when, then
 from selenium import webdriver
 from ui_features.pages.text_input_page import TextInputPage
-from ui_features.pages.dynamic_table_page import DynamicTablePage  # New import
+from ui_features.pages.dynamic_table_page import DynamicTablePage
 from ui_features.pages.ajax_page import AjaxPage
 
 
@@ -14,7 +14,7 @@ def step_open_browser(context):
 @when('I navigate to the Text Input page')
 def step_navigate_text_input_page(context):
     context.page = TextInputPage(context.driver)
-    context.page.navigate("http://www.uitestingplayground.com/textinput")
+    context.page.navigate(f"{context.base_url}/textinput")
 
 
 @when('I enter "{text}" into the text input')
@@ -37,7 +37,7 @@ def step_verify_button_text(context, expected_text):
 @when('I navigate to the Dynamic Table page')
 def step_navigate_dynamic_table_page(context):
     context.page = DynamicTablePage(context.driver)
-    context.page.navigate("http://www.uitestingplayground.com/dynamictable")
+    context.page.navigate(f"{context.base_url}/dynamictable")
 
 
 @then('I verify the Chrome CPU value matches the yellow label')
@@ -52,7 +52,7 @@ def step_verify_chrome_cpu_value(context):
 @when('I navigate to the AJAX page')
 def step_navigate_ajax_page(context):
     context.page = AjaxPage(context.driver)
-    context.page.navigate("http://www.uitestingplayground.com/ajax")
+    context.page.navigate(f"{context.base_url}/ajax")
 
 
 @when('I click the AJAX button')
