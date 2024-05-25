@@ -17,3 +17,15 @@ Feature: UI Testing Playground
     When I navigate to the AJAX page
     And I click the AJAX button
     Then I verify content is loaded
+
+  @visibility
+  Scenario: Verify Visibility of Elements
+    When I navigate to the Visibility page
+    And I click the Hide button
+    Then I verify the Removed button is not visible
+    And I verify the Zero Width button is not visible
+    And I verify the Overlapped button is not visible
+    And I verify the Opacity 0 button is not visible
+    And I verify the Visibility Hidden button is not visible
+    And I verify the Display None button is not visible
+    And I verify the Off Screen button is not visible

@@ -2,6 +2,7 @@ from behave import given, when, then
 from ui_features.pages.text_input_page import TextInputPage
 from ui_features.pages.dynamic_table_page import DynamicTablePage
 from ui_features.pages.ajax_page import AjaxPage
+from ui_features.pages.visibility_page import VisibilityPage
 
 
 @when('I navigate to the Text Input page')
@@ -57,3 +58,49 @@ def step_click_ajax_button(context):
 def step_verify_ajax_content(context):
     content = context.page.wait_for_content()
     assert content  # Add more detailed checks as needed
+
+
+@when('I navigate to the Visibility page')
+def step_navigate_visibility_page(context):
+    context.page = VisibilityPage(context.driver)
+    context.page.navigate(f"{context.base_url}/visibility")
+
+
+@when('I click the Hide button')
+def step_click_hide_button(context):
+    context.page.click_hide_button()
+
+
+@then('I verify the Removed button is not visible')
+def step_verify_removed_button_not_visible(context):
+    assert not context.page.is_removed_button_visible(), "Removed button is visible"
+
+
+@then('I verify the Zero Width button is not visible')
+def step_verify_zero_width_button_not_visible(context):
+    assert not context.page.is_zero_width_button_visible(), "Zero Width button is visible"
+
+
+@then('I verify the Overlapped button is not visible')
+def step_verify_overlapped_button_not_visible(context):
+    assert not context.page.is_overlapped_button_visible(), "Overlapped button is visible"
+
+
+@then('I verify the Opacity 0 button is not visible')
+def step_verify_opacity_0_button_not_visible(context):
+    assert not context.page.is_opacity_0_button_visible(), "Opacity 0 button is visible"
+
+
+@then('I verify the Visibility Hidden button is not visible')
+def step_verify_visibility_hidden_button_not_visible(context):
+    assert not context.page.is_visibility_hidden_button_visible(), "Visibility Hidden button is visible"
+
+
+@then('I verify the Display None button is not visible')
+def step_verify_display_none_button_not_visible(context):
+    assert not context.page.is_display_none_button_visible(), "Display None button is visible"
+
+
+@then('I verify the Off Screen button is not visible')
+def step_verify_off_screen_button_not_visible(context):
+    assert not context.page.is_off_screen_button_visible(), "Off Screen button is visible"
