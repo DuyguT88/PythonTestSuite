@@ -1,6 +1,6 @@
 from behave import given, when, then
 from api_features.utils import create_pet_data, send_post_request, send_put_request, send_delete_request, \
-    validate_response_status, validate_response_contains
+    validate_response_status, validate_response_contains, send_get_request
 
 
 @given('I have the data for a new pet')
@@ -54,3 +54,23 @@ def step_when_send_delete_request(context, petId):
 def step_then_receive_confirmation(context):
     validate_response_status(context.response, 200)
     validate_response_contains(context.response, context.expected_data)
+
+
+@then('I get that pet is created')
+def step_then_get_pet_created(context):
+    response = send_get_request(f"/pet/{context.expected_data['id']}")
+    validate_response_status(response, 200)
+    validate_response_contains(response, context.expected_data)
+
+
+@then('I get that the pet is updated')
+def step_then_get_pet_updated(context):
+    response = send_get_request(f"/pet/{context.expected_data['id']}")
+    validate_response_status(response, 200)
+    validate_response_contains(response, context.expected_data)
+
+
+@then('I get that pet is deleted')
+def step_then_get_pet_deleted(context):
+    response = send_get_request(f"/pet/{context.pet_id}")
+    validate_response_status(response, 404)  # Assuming the API returns 404 for deleted pets

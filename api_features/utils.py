@@ -1,43 +1,53 @@
 import requests
-import random
 
-BASE_URL = "https://petstore.swagger.io/v2"  # Base URL for the Petstore API
-
-
-def generate_random_pet_id():
-    return random.randint(10000, 99999)
+BASE_URL = "https://petstore.swagger.io/v2"
 
 
-def create_pet_data(pet_id=None, name="Rex", status="available"):
-    if pet_id is None:
-        pet_id = generate_random_pet_id()
+def create_pet_data():
     return {
-        "id": pet_id,
-        "name": name,
+        "id": generate_random_pet_id(),
         "category": {"id": 1, "name": "Dogs"},
-        "photoUrls": ["http://example.com/photo1"],
-        "tags": [{"id": 1, "name": "Tag1"}],
-        "status": status
+        "name": "Buddy",
+        "photoUrls": ["https://example.com/photo"],
+        "tags": [{"id": 1, "name": "tag1"}],
+        "status": "available"
     }
 
 
+def generate_random_pet_id():
+    import random
+    return random.randint(100000, 999999)
+
+
 def send_post_request(endpoint, data):
-    return requests.post(f"{BASE_URL}{endpoint}", json=data)
+    url = f"{BASE_URL}{endpoint}"
+    response = requests.post(url, json=data)
+    return response
 
 
 def send_put_request(endpoint, data):
-    return requests.put(f"{BASE_URL}{endpoint}", json=data)
+    url = f"{BASE_URL}{endpoint}"
+    response = requests.put(url, json=data)
+    return response
 
 
 def send_delete_request(endpoint):
-    return requests.delete(f"{BASE_URL}{endpoint}")
+    url = f"{BASE_URL}{endpoint}"
+    response = requests.delete(url)
+    return response
+
+
+def send_get_request(endpoint):
+    url = f"{BASE_URL}{endpoint}"
+    response = requests.get(url)
+    return response
 
 
 def validate_response_status(response, expected_status):
-    assert response.status_code == expected_status, f"Expected status {expected_status}, got {response.status_code}"
+    assert response.status_code == expected_status, f"Expected status {expected_status}, but got {response.status_code}"
 
 
 def validate_response_contains(response, expected_data):
-    response_json = response.json()
+    response_data = response.json()
     for key, value in expected_data.items():
-        assert response_json.get(key) == value, f"Expected {key} to be {value}, but got {response_json.get(key)}"
+        assert response_data.get(key) == value, f"Expected {key} to be {value}, but got {response_data.get(key)}"
