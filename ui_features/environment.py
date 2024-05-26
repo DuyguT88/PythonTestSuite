@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.options import Options
 def before_all(context):
     context.base_url = "http://www.uitestingplayground.com"
 
-def before_scenario(context):
+def before_scenario(context, scenario):
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
@@ -13,5 +13,5 @@ def before_scenario(context):
     context.driver = webdriver.Chrome(options=chrome_options)
     context.base_url = "http://www.uitestingplayground.com"
 
-def after_scenario(context):
+def after_scenario(context, scenario):
     context.driver.quit()
