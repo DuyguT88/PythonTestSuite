@@ -1,4 +1,4 @@
-It is an automated UI and API Testing Framework, hosted on GitHub, which utilizes Python, Selenium, and Cucumber to offer advanced testing solutions.
+It is an automated UI and API Testing Framework, hosted on GitHub, which utilizes Python, Selenium, and Behave (a BDD tool) with CI support and result reporting to offer advanced testing solutions.
 
 The selection of these particular tests for the API (Swagger Petstore) and UI (UI Testing Playground) scenarios was based on common and essential features that should be tested in any application with similar functionality. Here's the reasoning for why each of these tests was considered important:
 
@@ -30,7 +30,7 @@ http://www.uitestingplayground.com/ (UI)
    - **Importance**: Many modern web applications rely on AJAX to fetch or update data asynchronously. This allows the UI to be dynamic and responsive, improving user engagement.
    - **Use Case**: Verifies that data is fetched and displayed correctly in the UI after asynchronous requests, preventing user confusion due to partial or missing information.
 
-4. **Verify Visibility of Elements*:
+4. **Verify Visibility of Elements**:
    - **Importance**: Visibility checks are a common requirement in UI testing. Ensuring elements are displayed or hidden as expected is a critical part of many user interfaces, especially in dynamic web applications where elements may change state based on user interactions..
    - **Use Case**: In real-world applications, elements might dynamically appear or disappear based on user actions or application state changes. This test automation approach can be directly applied to such scenarios.
 
