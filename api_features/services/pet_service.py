@@ -1,4 +1,4 @@
-from .base_service import Base
+from api_features.services.base_service import Base
 
 
 class PetService(Base):
@@ -16,6 +16,16 @@ class PetService(Base):
 
     def delete_pet_request(self, pet_id):
         return self.send_delete_request(f"/pet/{pet_id}")
+
+    def delete_pet_if_exists(self, pet_id):
+        try:
+            self.send_get_request(f"/pet/{pet_id}")
+        except RuntimeError:
+            error_occur = True
+
+        if (error_occur == False):
+            response = self.send_delete_request(f"/pet/{pet_id}")
+            self.validate_response_status(response, 200)
 
     @staticmethod
     def create_pet_data(id=None, category_id=1, category_name="Dogs", name="Buddy",
@@ -40,3 +50,4 @@ class PetService(Base):
     def generate_random_pet_id():
         import random
         return random.randint(100000, 999999)
+
