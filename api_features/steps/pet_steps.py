@@ -16,6 +16,13 @@ def step_given_pet_created(context):
     response = pet_service.create_pet_request(context.pet_data)
     pet_service.validate_response_status(response, 200)
 
+    # Save the pet ID for deletion
+    context.pet_id = context.pet_data['id']
+
+    # Verify the pet exists by retrieving it
+    response = pet_service.retrieve_pet_request(context.pet_id)
+    pet_service.validate_response_status(response, 200)
+
 
 @given('I have the data for an existing pet to update')
 def step_given_existing_pet_data(context):
@@ -31,7 +38,7 @@ def step_given_pet_id(context):
 
 @when('I send a POST request to the "/pet" endpoint')
 def step_when_send_post_request(context):
-    response = pet_service.create_pet_request(context.pet_data)
+    response = pet_service.create_pet_request(context.new_pet_data)
     context.response = response
     context.expected_data = context.new_pet_data
 
@@ -45,7 +52,7 @@ def step_when_send_put_request(context):
 
 @when('I send a DELETE request to the "/pet/{petId}" endpoint')
 def step_when_send_delete_request(context, petId):
-    response = pet_service.delete_pet_request(f"/pet/{context.pet_id}")
+    response = pet_service.delete_pet_request(f"{context.pet_id}")
     context.response = response
     context.expected_data = {"code": 200, "type": "unknown", "message": str(context.pet_id)}
 
@@ -60,17 +67,24 @@ def step_then_receive_confirmation(context):
 
 @then('I get that pet is created')
 def step_then_get_pet_created(context):
-    response = pet_service.retrieve_pet_request(context.pet_id)
+    # Access the 'id' from the 'new_pet_data' dictionary correctly
+    pet_id = context.new_pet_data['id']
+    response = pet_service.retrieve_pet_request(pet_id)
+
+    # Validate the response status and content
     pet_service.validate_response_status(response, 200)
-    pet_service.validate_response_contains(response, context.expected_data)
+    pet_service.validate_response_contains(response, context.new_pet_data)
 
 
 @then('I get that the pet is updated')
 def step_then_get_pet_updated(context):
-    response = pet_service.retrieve_pet_request(context.pet_id)
+    # Access the 'id' from the 'new_pet_data' dictionary correctly
+    pet_id = context.expected_data['id']
+    response = pet_service.retrieve_pet_request(pet_id)
+
+    # Validate the response status and content
     pet_service.validate_response_status(response, 200)
     pet_service.validate_response_contains(response, context.expected_data)
-
 
 @then('I get that pet is deleted')
 def step_then_get_pet_deleted(context):
